@@ -61,6 +61,7 @@ authRoute.post('/register', async (req, res, next) => {
         });
 
         return res.status(200).send("successfully resgistered");
+        
 
     } catch (err) {
         return res.status(400).json({ "error": err.message });

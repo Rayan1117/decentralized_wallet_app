@@ -41,4 +41,19 @@ walletRoute.post('/transfer', async (req, res) => {
     }
 });
 
+walletRoute.post('/initialize', async (req, res) => {
+    try {
+        const address = req.headers['address'];
+        if (address) {
+            const result = await WA.initializeWallet(address);
+            if (result === 'wallet initialized') {
+                return res.status(200).json({ "message": result });
+            }
+            throw result;
+        }
+    } catch (err) {
+        return res.status(400).json({ "error": err.message });
+    }
+});
+
 module.exports.WalletRoute = walletRoute;

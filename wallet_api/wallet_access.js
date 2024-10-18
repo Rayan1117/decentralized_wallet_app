@@ -18,7 +18,7 @@ class WalletAccess {
             );
             return 'Wallet initialized';
         } catch (err) {
-            return err.message;
+            return err;
         }
     }
 
@@ -30,7 +30,7 @@ class WalletAccess {
             });
             return 'Transfer successful';
         } catch (err) {
-            return err.message;
+            return err;
         }
     }
 
@@ -39,7 +39,7 @@ class WalletAccess {
             const balance = await this.contract.methods.getBalanceOf(address).call();
             return balance;
         } catch (err) {
-            return err.message;
+            return err;
         }
     }
 
