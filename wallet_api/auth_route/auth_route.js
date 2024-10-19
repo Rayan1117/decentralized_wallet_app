@@ -61,7 +61,7 @@ authRoute.post('/register', async (req, res, next) => {
         });
 
         return res.status(200).send("successfully resgistered");
-        
+
 
     } catch (err) {
         return res.status(400).json({ "error": err.message });
@@ -76,8 +76,8 @@ authRoute.post('/login', async (req, res, next) => {
         const isExists = emails.some(mail => mail.email === email);
 
         if (isExists) {
-            const query = 'SELECT username,password FROM users WHERE email=@email';
-            const result = await db.executeQuery(query, {
+            let query = 'SELECT username,password FROM users WHERE email=@email';
+            let result = await db.executeQuery(query, {
                 "email": {
                     "type": sql.VarChar,
                     "value": email
@@ -87,6 +87,19 @@ authRoute.post('/login', async (req, res, next) => {
             if (result) {
                 const isSame = await bcrypt.compare(password, result[0]['password']);
                 if (isSame) {
+                    try {
+                        query = 'SELECT address FROM addresses WHERE username=@username';
+                        result = await db.executeQuery(query, {
+                            "username": {
+                                "type": sql.VarChar,
+                                "value": req.username
+                            }
+
+                        });
+                        req.address=result[0]['address'];
+                    } catch (err) {
+                        return res.status(err.status).json({ 'error': err.message });
+                    }
                     return next();
                 }
                 return res.status(403).json({ "error": "Incorrect password" });
@@ -98,7 +111,7 @@ authRoute.post('/login', async (req, res, next) => {
     try {
         const payload = { 'username': req.username, 'email': req.body.email };
         const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1d" });
-        return res.status(200).json({ 'message': { "token": token } });
+        return res.status(200).json({ 'message': { "token": token, "address": req.address } });
     } catch (err) {
         return res.status(400).json({ "error": err.message });
     }
@@ -106,22 +119,22 @@ authRoute.post('/login', async (req, res, next) => {
 
 authRoute.use('/verify', async (req, res, next) => {
     try {
-        const header= req.headers['authorization'];
+        const header = req.headers['authorization'];
         let token;
-        if(header){
-            if(header.startsWith('Bearer')){
-                token=header.split(" ")[1];
-                jwt.verify(token,process.env.SECRET_KEY,(err,decoded)=>{
-                    if(err){
-                        return res.status(400).json({"error":err.message});
+        if (header) {
+            if (header.startsWith('Bearer')) {
+                token = header.split(" ")[1];
+                jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+                    if (err) {
+                        return res.status(400).json({ "error": err.message });
                     }
                     req.username = decoded['username'];
                     console.log(decoded['username']);
                     return next();
                 });
             }
-            else{
-            return res.status(400).send('Not a Bearer token');
+            else {
+                return res.status(400).send('Not a Bearer token');
             }
         }
     } catch (err) {

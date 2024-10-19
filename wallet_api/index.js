@@ -5,6 +5,7 @@ const PORT=process.env.PORT;
 const { WalletRoute }=require('./wallet_access_route/wallet_api');
 const { authRoute }=require('./auth_route/auth_route');
 
+
 app.use('/wallet/auth/verify',WalletRoute);
 
 app.use('/auth',authRoute);
