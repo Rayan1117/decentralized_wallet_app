@@ -21,7 +21,6 @@ authRoute.post('/register', async (req, res, next) => {
             const salt = await bcrypt.genSalt(rounds);
             const hashedPassword = await bcrypt.hash(password, salt);
             req.hashedPassword = hashedPassword;
-            console.log(hashedPassword);
             next();
         }
         else {
@@ -60,7 +59,7 @@ authRoute.post('/register', async (req, res, next) => {
             }
         });
 
-        return res.status(200).send("successfully resgistered");
+        return res.status(200).send("successfully registered");
 
 
     } catch (err) {
@@ -105,7 +104,7 @@ authRoute.post('/login', async (req, res, next) => {
                 return res.status(403).json({ "error": "Incorrect password" });
             }
         }
-        return res.status(400).json({ "message": "email not found" });
+        return res.status(400).json({ "error": "email not found" });
     }
 }, async (req, res) => {
     try {
@@ -129,7 +128,7 @@ authRoute.use('/verify', async (req, res, next) => {
                         return res.status(400).json({ "error": err.message });
                     }
                     req.username = decoded['username'];
-                    console.log(decoded['username']);
+
                     return next();
                 });
             }

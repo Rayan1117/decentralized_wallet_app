@@ -24,7 +24,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: BlocConsumer<WalletBloc, WalletState>(
         listener: (context, state) {
-          // TODO: implement listener
+          (state is TransferErrorState)
+              ? ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.error),
+                  ),
+                )
+              : null;
         },
         builder: (context, state) {
           return Container(
@@ -66,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                                   BlocProvider.of<WalletBloc>(context).add(
                                     TransferEvent(
                                       amount: int.parse(_amountController.text),
-                                      reciever: _addressController.text.toString(),
+                                      reciever:
+                                          _addressController.text.toString(),
                                     ),
                                   );
                                 },

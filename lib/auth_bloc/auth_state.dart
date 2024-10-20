@@ -10,6 +10,6 @@ final class LoggedInState extends AuthState {}
 final class RegisteredState extends AuthState {}
 
 final class AuthErrorState extends AuthState {
-  String error;
+  final String error;
   AuthErrorState({required this.error});
 }

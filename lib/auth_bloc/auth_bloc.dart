@@ -15,7 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print("event triggered");
         if (event.formkey.currentState!.validate()) {
           final response = await http
-              .post(Uri.parse("http://192.168.110.58:5000/auth/login/"),
+              .post(Uri.parse("http://192.168.213.45:5000/auth/login"),
                   body: jsonEncode(
                     {"email": event.email, "password": event.password},
                   ),
@@ -42,6 +42,44 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } catch (err) {
         print(err.toString());
+        emit(
+          AuthErrorState(
+            error: err.toString(),
+          ),
+        );
+      }
+    });
+
+    on<RegisterEvent>((event, emit) async {
+      try {
+        if (event.formkey.currentState!.validate()) {
+          final response = await http.post(
+            Uri.parse("http://192.168.213.45:5000/auth/register"),
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(
+              {
+                "username": event.username,
+                "email": event.email,
+                "password": event.password
+              },
+            ),
+          );
+          if (response.statusCode == 200) {
+            add(
+              LoginEvent(
+                  formkey: event.formkey,
+                  email: event.email,
+                  password: event.password),
+            );
+          }
+        }
+      } catch (err) {
+        print(err);
+        emit(
+          AuthErrorState(
+            error: err.toString(),
+          ),
+        );
       }
     });
   }

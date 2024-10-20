@@ -2,12 +2,15 @@ const express = require('express');
 const walletRoute = express.Router();
 const { WalletAccess } = require('../wallet_access');
 const WA = new WalletAccess();
+const { UserVerification }=require('../verify/verify_user');
 
 walletRoute.use(express.json());
 
 walletRoute.get('/check', (req, res) => {
     return res.status(200).send('wallet route working perfectly');
 });
+
+walletRoute.use('/verify_user',UserVerification);
 
 walletRoute.get('/get_balance', async (req, res) => {
     try {
@@ -23,7 +26,7 @@ walletRoute.get('/get_balance', async (req, res) => {
     }
 });
 
-walletRoute.post('/transfer', async (req, res) => {
+walletRoute.post('/verify_user/transfer', async (req, res) => {
     try {
         const address = req.headers['address'];
         if (address) {
