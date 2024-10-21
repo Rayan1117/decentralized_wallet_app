@@ -4,7 +4,7 @@ const { abi } = require('C:\\Users\\rayan\\decentralized_wallet_app\\wallet_api\
 class WalletAccess {
     constructor() {
         this.ethNetwork = new Web3('http://127.0.0.1:7545');
-        this.contractAddress = '0xCEd2D3e48660f91Eb306FA1B545569Dbe3c3e4eA';
+        this.contractAddress = '0xD4524933355948764Ea07c4C87E70390Ad6184a7';
         this.contract = new this.ethNetwork.eth.Contract(abi, this.contractAddress);
     }
 
@@ -13,11 +13,13 @@ class WalletAccess {
             await this.contract.methods.initializeWallet(address).send(
                 {
                     from: address,
-                    gas: 300000,
+                    gas: 500000,
                 }
             );
+            console.log("initialized");
             return 'Wallet initialized';
         } catch (err) {
+            console.log(err.message);
             return err;
         }
     }

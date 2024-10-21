@@ -26,7 +26,7 @@ class EntryPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {"/homepage": (context) => const HomePage()},
-      home: AuthPage(),
+      home: const AuthPage(),
     );
   }
 

@@ -2,10 +2,10 @@ const sql = require('mssql');
 
 class DatabaseAccess {
     #dbConfig = {
-        server: 'LAPTOP-FK7KM234',
-        database: 'MZCET',
-        user: 'RYN',
-        password: 'Dbdb33937778db',
+        server: 'ASUS',
+        database: 'DAPP',
+        user: 'ADMIN',
+        password: 'db33937778db',
         options: {
             trustServerCertificate: true
         }

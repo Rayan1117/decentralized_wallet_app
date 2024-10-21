@@ -14,7 +14,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         print('transfer');
         SharedPreferences prefs = await SharedPreferences.getInstance();
         final http.Response response = await http.post(
-            Uri.parse("http://192.168.213.45:5000/wallet/auth/verify/verify_user/transfer"),
+            Uri.parse("http://10.201.197.234:5000/wallet/auth/verify/verify_user/transfer"),
             body: jsonEncode(
                 {"amount": event.amount, "recipient": event.reciever.toString()}),
             headers: {
@@ -68,7 +68,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   Future<int> getBalance(SharedPreferences prefs) async {
     final res = await http.get(
         Uri.parse(
-          'http://192.168.213.45:5000/wallet/auth/verify/get_balance',
+          'http://10.201.197.234:5000/wallet/auth/verify/get_balance',
         ),
         headers: {
           'Content-Type': 'appication/json',

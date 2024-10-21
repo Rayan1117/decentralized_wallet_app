@@ -13,3 +13,12 @@ final class AuthErrorState extends AuthState {
   final String error;
   AuthErrorState({required this.error});
 }
+
+final class AmountInitialized extends AuthState{}
+
+final class AmountInitializeErrorState extends AuthState{
+  final String error;
+
+  AmountInitializeErrorState({required this.error});
+  
+}

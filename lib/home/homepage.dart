@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   },
-                  child: Text('transfer'),
+                  child: const Text('transfer'),
                 ),
               ],
             ),

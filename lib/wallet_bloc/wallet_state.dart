@@ -16,3 +16,4 @@ final class GotBalanceState extends WalletState{
   final int balance;
   GotBalanceState({required this.balance});
 }
+

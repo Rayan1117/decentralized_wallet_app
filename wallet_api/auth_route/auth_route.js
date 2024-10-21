@@ -5,11 +5,10 @@ const { Database } = require('../database_access/database_access');
 const db = new Database();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { WalletRoute } = require('../wallet_access_route/wallet_api');
 
 authRoute.use(express.json());
 
-authRoute.get('/check', (req, res, next) => {
+authRoute.get('/check', (req, res) => {
     return res.status(200).send('Authentication route working perfectly');
 });
 
@@ -93,9 +92,8 @@ authRoute.post('/login', async (req, res, next) => {
                                 "type": sql.VarChar,
                                 "value": req.username
                             }
-
                         });
-                        req.address=result[0]['address'];
+                        req.address = result[0]['address'];
                     } catch (err) {
                         return res.status(err.status).json({ 'error': err.message });
                     }

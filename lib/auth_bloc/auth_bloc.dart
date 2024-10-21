@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,7 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print("event triggered");
         if (event.formkey.currentState!.validate()) {
           final response = await http
-              .post(Uri.parse("http://192.168.213.45:5000/auth/login"),
+              .post(Uri.parse("http://10.201.197.234:5000/auth/login"),
                   body: jsonEncode(
                     {"email": event.email, "password": event.password},
                   ),
@@ -54,7 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         if (event.formkey.currentState!.validate()) {
           final response = await http.post(
-            Uri.parse("http://192.168.213.45:5000/auth/register"),
+            Uri.parse("http://10.201.197.234:5000/auth/register"),
             headers: {"Content-Type": "application/json"},
             body: jsonEncode(
               {
@@ -71,6 +70,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                   email: event.email,
                   password: event.password),
             );
+            final response = await http.post(
+              Uri.parse(
+                "http://10.201.197.234:5000/wallet/auth/verify/transfer",
+              ),
+            );
+            if (response.statusCode == 200) {
+              emit(
+                AmountInitialized(),
+              );
+            } else {
+              emit(
+                AmountInitializeErrorState(
+                  error: jsonDecode(response.body)['error'],
+                ),
+              );
+            }
           }
         }
       } catch (err) {

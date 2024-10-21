@@ -4,7 +4,7 @@ import 'package:decentralized_wallet_app/auth_bloc/auth_bloc.dart';
 import 'package:decentralized_wallet_app/auth_page/login_page.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,8 @@ class RegisterPage extends StatelessWidget {
                   TextFormField(
                     controller: confirmPasswordController,
                     obscureText: true,
-                    decoration: const InputDecoration(labelText: 'Confirm Password'),
+                    decoration:
+                        const InputDecoration(labelText: 'Confirm Password'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please confirm your password';
@@ -89,8 +90,12 @@ class RegisterPage extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
                     },
                     child: const Text('I already have an account'),
                   ),

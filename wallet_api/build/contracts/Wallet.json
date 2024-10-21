@@ -3872,12 +3872,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xCEd2D3e48660f91Eb306FA1B545569Dbe3c3e4eA",
-      "transactionHash": "0x8f72ee768c42d619abe2fbea7d6dd3d46279aecf9982130a42967f3bf91684e9"
+      "address": "0xD4524933355948764Ea07c4C87E70390Ad6184a7",
+      "transactionHash": "0x2497b035d68e24a95ad7b8c692c0752728eec308be417f903ee40726e7762da6"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-10-17T07:03:55.900Z",
+  "updatedAt": "2024-10-21T06:31:19.481Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
